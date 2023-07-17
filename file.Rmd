@@ -1,0 +1,50 @@
+
+```{r}
+x_t = 2018:2022
+x_inf = c(2.27,    2.00,    0.72,    3.40,    6.80)
+
+# In long term is exponential, but we are looking at short term, therefore used linear model.
+# Some discrepancy between actual future values and model, but this model is created to show the general trend over the next years
+
+
+
+y1 = c(3251,	3459,	3103,	3412,	3829)
+y2 = c(1120,	1346,	1756,	1789,	2117)
+y3 = c(1245,	1455	,1594	,1697,	1874)
+
+
+x_t_new = 2018:2028
+x_inf_new = c(2.27,    2.00,    0.72,    3.40,    6.80,3.9,2.39,1.88,1.89,1.9,2)
+x_df = data.frame(x_t_new,x_inf_new)
+names(x_df) = c('x_t', 'x_inf')
+
+model1 <- lm(y1~x_t+x_inf)
+
+model2 <- lm(y2~x_t+x_inf)
+
+model3 <- lm(y3~x_t+x_inf)
+
+y1_pred <- predict(model1,newdata = x_df)
+y2_pred <- predict(model2,newdata =x_df)
+y3_pred <- predict(model3,newdata =x_df)
+
+
+
+# Create a scatter plot of the data points
+plot(x_t, y1, col = "blue", pch = 19, xlab = "Year", ylab = "Dollars (in Millions)", main = "Losses excluding CAT losses", ylim = c(1000,4000),xlim=c(2018,2028),lwd = 2)
+
+# Create a scatter plot of the data points
+points(x_t, y2, col = "red", pch = 19)
+
+# Create a scatter plot of the data points
+points(x_t, y3, col = "green", pch = 19)
+
+lines(x=x_t_new,y=y1_pred ,col = "blue",lwd=3)
+lines(x=x_t_new,y=y2_pred,col = "red",lwd=3)
+lines(x=x_t_new,y=y3_pred,col = "green",lwd=3)
+legend("bottomright", legend = c("Personal Auto","Personal Property", "Commercial Lines"), cex=1,col = c("blue","red", "green"), pch = c(19, 19,19))
+
+
+
+```
+
